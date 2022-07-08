@@ -40,8 +40,10 @@ The Markdown to HTML template is by default located in the config directory at
 templating system (for links see down below), I will not give any tutorial
 here, but just tell you the data you are working with:
 
-[embedmd]:# (note/note.go go /^type Note struct {$/ /^}$/)
+[embedmd]:# (note/note.go go /^type Metadata/ /^}$/)
 ```go
+type Metadata map[string]interface{}
+
 type Note struct {
 	Metadata
 	Content template.HTML
