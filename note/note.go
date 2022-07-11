@@ -25,6 +25,7 @@ type Note struct {
 var md = goldmark.New(
 	goldmark.WithExtensions(
 		extension.GFM,
+		extension.Footnote,
 		extension.Typographer, // -- into –, ... into … etc.
 		meta.Meta,             // YAML metadata header parsing
 		mathjax.MathJax,

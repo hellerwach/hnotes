@@ -50,6 +50,9 @@ type Note struct {
 }
 ```
 
+#### Documentation
+- [template.HTML](https://pkg.go.dev/html/template#HTML)
+
 ### Directory view template
 The directory view template is default located in the config directory at
 `templates/dir.html`. The same as [above](#markdown-to-html-template) applies here.
@@ -61,6 +64,9 @@ type dir struct {
 	Entries []fs.DirEntry
 }
 ```
+
+#### Documentation
+- [fs.DirEntry](https://pkg.go.dev/io/fs#DirEntry)
 
 ### Markdown template
 The Markdown template **is** located in the config directory at
