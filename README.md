@@ -43,7 +43,9 @@ customizable. All the files are located at `~/.config/hnotes`.
 
 | Name | Documentation |
 |------|---------------|
+|filepathJoin|[filepath.Join](https://pkg.go.dev/filepath#Join)|
 |hasPrefix|[strings.HasPrefix](https://pkg.go.dev/strings#HasPrefix)|
+|hasSuffix|[strings.HasSuffix](https://pkg.go.dev/strings#HasSuffix)|
 
 ### Markdown to HTML template
 

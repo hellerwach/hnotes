@@ -45,7 +45,9 @@ func Run(port int) {
 
 	// Templates
 	funcs := map[string]any{
-		"hasPrefix": strings.HasPrefix,
+		"filepathJoin": filepath.Join,
+		"hasPrefix":    strings.HasPrefix,
+		"hasSuffix":    strings.HasSuffix,
 	}
 	t := &Template{
 		templates: template.Must(template.New("").Funcs(funcs).ParseGlob(filepath.Join(ConfigPath, "templates/*.html"))),
