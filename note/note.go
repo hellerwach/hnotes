@@ -11,6 +11,7 @@ import (
 	meta "github.com/yuin/goldmark-meta"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/renderer/html"
 )
 
 type Metadata map[string]interface{}
@@ -33,7 +34,9 @@ var md = goldmark.New(
 	goldmark.WithParserOptions(
 		parser.WithAutoHeadingID(),
 	),
-	goldmark.WithRendererOptions(),
+	goldmark.WithRendererOptions(
+		html.WithUnsafe(),
+	),
 )
 
 // New reads the file at the given path, extracts the metadata and converts the
