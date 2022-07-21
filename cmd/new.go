@@ -6,7 +6,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"hellerwach.com/go/hnotes/server"
+	"hellerwach.com/go/hnotes/config"
 )
 
 var newCmd = &cobra.Command{
@@ -27,7 +27,7 @@ var newCmd = &cobra.Command{
 }
 
 func new(path string) error {
-	mdTemplate, err := os.ReadFile(filepath.Join(server.ConfigPath, "templates/single.md"))
+	mdTemplate, err := os.ReadFile(filepath.Join(config.DirPath, "templates/single.md"))
 	if err != nil {
 		return err
 	}

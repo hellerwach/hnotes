@@ -16,6 +16,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/sirupsen/logrus"
+	"hellerwach.com/go/hnotes/config"
 	"hellerwach.com/go/hnotes/note"
 )
 
@@ -34,8 +35,6 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return nil
 }
 
-var ConfigPath = filepath.Join(os.Getenv("HOME"), ".config/hnotes")
-
 // Run runs the note server and makes further function calls. It will also
 // terminate the process.
 func Run(port int) {
@@ -50,7 +49,7 @@ func Run(port int) {
 		"hasSuffix":    strings.HasSuffix,
 	}
 	t := &Template{
-		templates: template.Must(template.New("").Funcs(funcs).ParseGlob(filepath.Join(ConfigPath, "templates/*.html"))),
+		templates: template.Must(template.New("").Funcs(funcs).ParseGlob(filepath.Join(config.DirPath, "templates/*.html"))),
 	}
 	e.Renderer = t
 

@@ -3,6 +3,8 @@ package cmd
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	"hellerwach.com/go/hnotes/config"
 	"hellerwach.com/go/hnotes/server"
 )
 
@@ -17,6 +19,9 @@ it. It also provides directory viewing functionality.`,
 		if err != nil {
 			logrus.Fatalf("Could not get port from command-line arguments: %v\n", err)
 		}
+		if viper.GetInt("port") != 0 {
+			port = viper.GetInt("port")
+		}
 		server.Run(port)
 	},
 }
@@ -28,6 +33,7 @@ func Execute() {
 }
 
 func init() {
+	cobra.OnInitialize(config.MustRead)
 	rootCmd.PersistentFlags().IntP("port", "p", 4545, "port on which the server will run")
 
 	rootCmd.AddCommand(newCmd)
