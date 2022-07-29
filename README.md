@@ -91,6 +91,19 @@ type dir struct {
 The Markdown template **is** located in the config directory at
 `templates/single.md`. It will be copied uncoditionally by `hnotes new`.
 
+### Extensions
+As `hnotes` only provides minimal functionality, but it is extensible. You can
+put shell scripts or executables in `.config/hnotes/extensions` and if the
+first command line argument is not a predefined sub command or a flag, it will
+try to execute the shell script or executable and pass the arguments given.
+
+Example with the `hello` script in the [`.config/hnotes/extensions`](.config/hnotes/extensions/hello):
+
+```
+$ hnotes hello world
+hello world
+```
+
 # Go's templating system
 
 Some tutorials about Go's templating system can be found here:
