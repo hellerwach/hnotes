@@ -16,6 +16,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 	"hellerwach.com/go/hnotes/config"
 	"hellerwach.com/go/hnotes/note"
 )
@@ -94,6 +95,7 @@ func Run(port int) {
 	}
 }
 
+// Read the file in the Request URL Path, parse and render the template.
 func serveNote(c echo.Context) error {
 	path := strings.TrimPrefix(c.Request().URL.Path, "/")
 	note, err := note.New(path)
@@ -106,6 +108,7 @@ func serveNote(c echo.Context) error {
 type dir struct {
 	Path    string
 	Entries []fs.DirEntry
+	note.Note
 }
 
 // directoryView renders the dir template with the data of the current
@@ -120,7 +123,36 @@ func directoryView(c echo.Context) error {
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "could not read directory: "+err.Error())
 	}
-	dir := dir{Entries: dirEntries, Path: path}
 
-	return c.Render(http.StatusOK, "dir", dir)
+	n := new(note.Note)
+	if viper.GetBool("dirView.folderName") {
+		n, err = note.New(filepath.Join(path, dirName(path)+".md"))
+	}
+
+	// folderName rendering has precedence. If there was no error in reading it,
+	// this will be skipped.
+	if err != nil {
+		for _, name := range viper.GetStringSlice("dirView.fileNames") {
+			if n, err = note.New(filepath.Join(path, name)); err == nil {
+				// One file was read successfully and thus the other files
+				// do not have to be read anymore.
+				break
+			}
+		}
+	}
+
+	d := dir{Entries: dirEntries, Path: path, Note: *n}
+
+	return c.Render(http.StatusOK, "dir", d)
+}
+
+// dirName will return the name of the directory, assuming that path is a path
+// to a directory.
+func dirName(path string) string {
+	abs, err := filepath.Abs(path)
+	if err != nil {
+		logrus.Fatalln(err)
+	}
+	_, dir := filepath.Split(abs)
+	return dir
 }

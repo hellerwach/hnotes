@@ -46,12 +46,12 @@ func New(path string) (*Note, error) {
 
 	content, err := os.ReadFile(path)
 	if err != nil {
-		return nil, err
+		return note, err
 	}
 	var html bytes.Buffer
 	context := parser.NewContext()
 	if err := md.Convert(content, &html, parser.WithContext(context)); err != nil {
-		return nil, err
+		return note, err
 	}
 	metadata := meta.Get(context)
 

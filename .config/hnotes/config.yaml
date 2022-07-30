@@ -1,2 +1,16 @@
 # Port on which the server will run
 port: 4545 # Default port
+
+dirView:
+  # Enable automatic rendering of <folderName>.md.
+  # Example:
+  # folder
+  # |-file1.md
+  # |-folder.md
+  #
+  # The struct passed to the template will contain the same fields as a
+  # normal note (i.e. .Content and .Metadata from folder.md).
+  folderName: true
+  # Same as above, but with fixed file names.
+  # folderName rendering has precedence.
+  fileNames: ["README.md"]
